@@ -1,0 +1,86 @@
+name: Build Windows 11 port
+
+# 100% desatendido: se dispara solo en cada push a una rama (no a tags, para
+# no auto-disparar el workflow al mover el tag "latest" más abajo), sin pasos
+# manuales. Descarga raylib, compila runtime+compilador+IDE, deja el artifact
+# del run en la pestaña Actions y además publica/actualiza la release
+# "latest" con un zip listo para descargar.
+on:
+  push:
+    branches:
+      - '**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  RAYLIB_VERSION: "5.0"
+  RAYLIB_DIST: "raylib-5.0_win64_msvc16"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Descargar raylib precompilada (MSVC, win64)
+        shell: pwsh
+        run: |
+          $url = "https://github.com/raysan5/raylib/releases/download/${{ env.RAYLIB_VERSION }}/${{ env.RAYLIB_DIST }}.zip"
+          Write-Host "Descargando $url"
+          Invoke-WebRequest -Uri $url -OutFile raylib.zip
+          Expand-Archive -Path raylib.zip -DestinationPath raylib_dist
+
+      - name: Configurar (CMake)
+        shell: pwsh
+        run: |
+          cmake -B build . -DRAYLIB_PATH="${{ github.workspace }}\raylib_dist\${{ env.RAYLIB_DIST }}"
+
+      - name: Compilar runtime, compilador e IDE
+        shell: pwsh
+        run: |
+          cmake --build build --target div32run_port divc_port div_ide_port --config Release
+
+      - name: Preparar recursos del IDE junto al .exe
+        shell: pwsh
+        run: |
+          Copy-Item -Recurse -Force system   build\Release\system
+          Copy-Item -Recurse -Force help     build\Release\help
+          Copy-Item -Recurse -Force resource build\Release\resource
+
+      - name: Publicar artifact del run
+        uses: actions/upload-artifact@v4
+        with:
+          name: div-windows11-${{ github.run_number }}-${{ github.sha }}
+          path: |
+            build/Release/*.exe
+            build/Release/*.dll
+            build/Release/system
+            build/Release/help
+            build/Release/resource
+          if-no-files-found: error
+
+      - name: Empaquetar zip para la release
+        shell: pwsh
+        run: |
+          Compress-Archive -Force -DestinationPath div-games-studio-x86-windows11.zip -Path `
+            build\Release\*.exe, build\Release\*.dll, build\Release\system, build\Release\help, build\Release\resource
+
+      - name: Publicar/actualizar release "latest"
+        uses: ncipollo/release-action@v1
+        with:
+          tag: latest
+          commit: ${{ github.sha }}
+          name: "Build automático (latest)"
+          body: |
+            Build automático generado por CI desde el commit ${{ github.sha }} en `${{ github.ref_name }}`.
+
+            Descarga `div-games-studio-x86-windows11.zip`, descomprímelo y ejecuta `div_ide_port.exe` (el IDE), `div32run_port.exe` (el runtime) o `divc_port.exe` (el compilador).
+          artifacts: "div-games-studio-x86-windows11.zip"
+          allowUpdates: true
+          replacesArtifacts: true
+          makeLatest: true
+          token: ${{ secrets.GITHUB_TOKEN }}
