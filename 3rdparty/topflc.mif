@@ -1,0 +1,34 @@
+!ifndef ROOT
+!error Se requiere la macro ROOT
+!endif
+!ifndef SEP
+!error Se requiere la macro SEP
+!endif
+
+!ifndef INC_NOVARS
+
+!ifdef CPU
+TFLC_LIB = $(ROOT)$(SEP)3rdparty$(SEP)lib$(SEP)$(CPU)$(SEP)tflc_w32.lib
+!endif
+TFLC_DIR = $(ROOT)$(SEP)3rdparty$(SEP)topflc
+INCLUDE += -I$(TFLC_DIR)
+CLEAN_LIB3P_DEPS += clean_tflc
+
+!endif #INC_NOVARS
+
+!ifndef INC_NOTARGETS
+
+!ifdef CPU
+$(TFLC_LIB): lib3p_dir .EXISTSONLY
+	cd $(TFLC_DIR)
+	$(MAKE) $^. -f makefile.w32 CPU=$(CPU)
+	$(COPY) $^. $^:
+	cd $+$(%cwd)$-
+!endif
+
+clean_tflc: .SYMBOLIC
+	cd $(TFLC_DIR)
+	$(MAKE) -f makefile.w32 clean
+	cd $+$(%cwd)$-
+
+!endif #INC_NOTARGETS

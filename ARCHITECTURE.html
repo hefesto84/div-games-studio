@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arquitectura de DIV Games Studio 2</title>
+<style>
+:root {
+  --bg: #0a0a0a;
+  --fg: #e0e0e0;
+  --accent: #4fc3f7;
+  --accent2: #81c784;
+  --border: #333;
+  --code-bg: #111;
+  --header-bg: #0d1117;
+  --table-stripe: #151515;
+  --table-header: #1a2332;
+  --link: #58a6ff;
+  --red: #f44;
+  --yellow: #ff0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.7;
+  padding: 0 2rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+h1 {
+  font-size: 2rem;
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  padding: 1.5rem 0 1rem;
+  margin-bottom: 1rem;
+}
+h2 {
+  font-size: 1.4rem;
+  color: var(--accent2);
+  border-bottom: 1px solid var(--border);
+  padding: 1.2rem 0 0.6rem;
+  margin-top: 2rem;
+}
+h3 {
+  font-size: 1.1rem;
+  color: var(--accent);
+  margin-top: 1.2rem;
+}
+p, li { margin: 0.5rem 0; }
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: #fff; }
+hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: 0.3rem 0; }
+code {
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  background: var(--code-bg);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+  margin: 0.8rem 0;
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+pre code { background: none; padding: 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.8rem 0;
+  font-size: 0.95em;
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+th {
+  background: var(--table-header);
+  color: var(--accent);
+  font-weight: 600;
+}
+tr:nth-child(even) { background: var(--table-stripe); }
+.label-dos { color: var(--yellow); }
+.label-ok  { color: var(--accent2); }
+.label-warn { color: #ffa726; }
+.finding {
+  border-left: 3px solid var(--accent);
+  background: var(--code-bg);
+  padding: 0.6rem 1rem;
+  margin: 0.8rem 0;
+  border-radius: 0 6px 6px 0;
+}
+.index-table td:first-child { text-align: center; color: #888; width: 2rem; }
+.footer {
+  margin-top: 3rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border);
+  font-size: 0.85em;
+  color: #666;
+}
+</style>
+</head>
+<body>
+
+<h1>Arquitectura de DIV Games Studio 2</h1>
+<p>Documento de revisión del código fuente original de <strong>DIV Games Studio 2</strong> (Hammer Technologies, 1998–1999), restaurado y mantenido en este repositorio (fork de <a href="https://github.com/DIVGAMES/DIV-Games-Studio">DIVGAMES/DIV-Games-Studio</a>, mantenido en <a href="https://github.com/vii1/DIV">vii1/DIV</a>).</p>
+
+<p>Este archivo es un <strong>índice condensado</strong>. Cada sección tiene un documento hermano en <code>docs/architecture/</code> con la investigación completa: lectura real del código fuente (no solo listados de archivos), estructuras de datos, flujos de control, referencias cruzadas a símbolos concretos y, donde no se pudo confirmar algo sin más esfuerzo, una nota explícita en vez de una suposición.</p>
+
+<table class="index-table">
+  <tr><th>#</th><th>Sección</th><th>Documento detallado</th></tr>
+  <tr><td>1</td><td>Visión general</td><td><a href="docs/architecture/01-vision-general.md">01-vision-general.md</a></td></tr>
+  <tr><td>2</td><td>Estructura del repositorio</td><td><a href="docs/architecture/02-estructura-repositorio.md">02-estructura-repositorio.md</a></td></tr>
+  <tr><td>3</td><td>Componentes principales</td><td><a href="docs/architecture/03-componentes-principales.md">03-componentes-principales.md</a></td></tr>
+  <tr><td>4</td><td>Build system</td><td><a href="docs/architecture/04-build-system.md">04-build-system.md</a></td></tr>
+  <tr><td>5</td><td>Dependencias de terceros</td><td><a href="docs/architecture/05-dependencias-terceros.md">05-dependencias-terceros.md</a></td></tr>
+  <tr><td>6</td><td>Formatos de archivo propietarios</td><td><a href="docs/architecture/06-formatos-archivo.md">06-formatos-archivo.md</a></td></tr>
+  <tr><td>7</td><td>Modelo de ejecución (pipeline)</td><td><a href="docs/architecture/07-modelo-ejecucion.md">07-modelo-ejecucion.md</a></td></tr>
+  <tr><td>8</td><td>Aspectos técnicos / desafíos de portabilidad</td><td><a href="docs/architecture/08-aspectos-tecnicos.md">08-aspectos-tecnicos.md</a></td></tr>
+  <tr><td>9</td><td>Estado del árbol (fotografía puntual)</td><td><a href="docs/architecture/09-estado-arbol.md">09-estado-arbol.md</a></td></tr>
+  <tr><td>10</td><td>Hoja de ruta</td><td><a href="docs/architecture/10-hoja-de-ruta.md">10-hoja-de-ruta.md</a></td></tr>
+</table>
+
+<hr>
+
+<h2>1. Visión general</h2>
+<p>DIV Games Studio 2 es un <strong>entorno completo de desarrollo de videojuegos</strong> para MS-DOS que integra editor gráfico, editor de sprites, editor de código, compilador del lenguaje propio "DIV", depurador, reproductor/intérprete y sistema de ayuda. Publicado en 1999, este repo restaura el código comercial original bajo licencia <strong>GPL v3</strong>.</p>
+<p>Roadmap: <strong>v2.01</strong> (reproducción fiel del DIV 2 de 1999) → <strong>v2.02</strong> (arreglo de bugs conocidos y pulido) → <strong>después</strong> (mejoras, reorganización, documentación). Objetivo de plataforma: <strong>MS-DOS</strong> (486+/16 MB RAM/SVGA, sobre DOSBox/DOSBox-X o DOS real). Los ports modernos nativos viven en otros repos (<a href="https://github.com/DIVGAMES/DIV-Games-Studio">MikeDX/DIV-Games-Studio</a>).</p>
+<div class="finding">Un punto de diseño central que atraviesa todo lo demás: DIV separa el <strong>entorno de autor</strong> (el IDE, <code>D.EXE</code>) del <strong>entorno de ejecución</strong> (<code>DIV32RUN</code>, la VM de bytecode) — lo que se distribuye a los jugadores es un ejecutable autocontenido sin depurador ni herramientas de autor.</div>
+<p>→ Detalle: <a href="docs/architecture/01-vision-general.md">01</a>.</p>
+
+<hr>
+
+<h2>2. Estructura del repositorio</h2>
+<pre><code>DIV/
+├── makefile, os.mif, common.mif, 3rdparty.mif, c.lnk/cdbg.lnk, .clang-format, .travis.yml, Vagrantfile
+├── src/                # Código fuente (C/C++ + ASM x86): div/, div32run/, install/, install2/,
+│                        # wstub/, div_stub/ (deshabilitado), netlib/, vpe/, *.c/*.h/*.asm compartidos
+├── dll/                # SDK de DLL para el lenguaje DIV + ejemplos
+├── formats/             # Especs de formatos de archivo (Kaitai .ksy)
+├── 3rdparty/            # Librerías de terceros (código + .lib precompiladas 386/586)
+├── pmwlite/             # Extensor 32-bit PMODE/W (DOS) + pmodew.exe
+├── genspr/, help/, install/, resource/, setup/, system/   # Datos runtime/instalador
+├── docs/                # Documentación (grafo de dependencias, esta carpeta architecture/)
+└── tools/               # bin2h, testdll, unpak, wld</code></pre>
+<p>Nota: <code>netlib/</code> y <code>vpe/</code> existen tanto en <code>src/</code> (raíz) como duplicados dentro de <code>src/div32run/</code> — no confundir ambas copias al editar. <code>src/div_stub/</code> está deshabilitado a propósito (ver §3).</p>
+<p>→ Detalle y notas: <a href="docs/architecture/02-estructura-repositorio.md">02</a>.</p>
+
+<hr>
+
+<h2>3. Componentes principales</h2>
+<p>El sistema se compone de varios binarios que colaboran en el pipeline de desarrollo:</p>
+<ul>
+  <li><strong>El IDE</strong> (<code>src/div</code> → <code>D.EXE</code>/<code>D.386</code>): el "Sistema Operativo DIV™" — editor, compilador (<code>divc.cpp</code>), pintura, GUI, sprites/FPG, audio, input, ayuda, generador de instalaciones. Subcarpeta <code>visor/</code> genera sprites 3D (build Pentium).</li>
+  <li><strong>El intérprete</strong> (<code>src/div32run</code> → DIV32RUN): la VM del lenguaje DIV. <code>kernel.cpp</code> no es un archivo compilable por sí solo: son los <code>case</code> de un <code>switch</code>, incluidos dos veces dentro de <code>i.cpp</code> (ejecución normal y modo <em>trace</em> del depurador). Las funciones runtime del lenguaje (gráficos, sonido, etc.) viven en un <strong>segundo</strong> switch gigante, <code>function()</code> en <code>f.cpp</code>, al que se llega vía el opcode <code>lfun</code>. La memoria de la VM es un único array <code>mem[]</code> sin segmentación (código + datos + estado de procesos), con ~127 opcodes duplicados a mano (mismos valores numéricos) entre <code>divc.cpp</code> (compilador) e <code>inter.h</code> (intérprete), sin cabecera compartida — riesgo real de desincronización.</li>
+  <li><strong>El stub tiene en realidad dos roles distintos</strong> (el <code>ARCHITECTURE.md</code> original los mezclaba): <code>src/wstub/wstub.c</code> es un supervisor 16-bit activo que relanza <code>D.EXE</code> interpretando el código de salida como comando; el stub <em>embebido</em> en los juegos compilados es un binario de 602 bytes ya compilado, congelado, escrito literalmente al principio de cada EXE (<code>div_stub.h</code>, generado en su día desde <code>src/div_stub/asm</code> vía <code>bin2h</code>) — confirmado byte a byte contra <code>formats/game_exe.ksy</code>. <code>src/div_stub/</code> está deshabilitado porque tocarlo rompe la compatibilidad binaria con <code>DIV32RUN.DLL</code> de DIV2.</li>
+  <li><strong>El instalador</strong> (<code>src/install</code> → <code>install.ovl</code>, + <code>install2/</code> alternativa en C puro).</li>
+  <li><strong>Las DLLs</strong> (<code>dll/</code>): SDK de plugins. El loader PE propio (<code>pe_load.c</code>/<code>divdll.c</code>) es una integración de <strong>MikDLL</strong> (MikMak/HaRDCoDE, 1995), no desarrollo original de Hammer Technologies; parsea cabeceras/secciones/relocations a mano pero <strong>no procesa la tabla de importación PE</strong> — el "enlace dinámico" real de DIV es un mecanismo propio y paralelo (<code>DIV_export</code>/<code>DIV_import</code> vía <code>divmain</code>/<code>divlibrary</code>/<code>divend</code>).</li>
+  <li><strong>VPE</strong> (<code>src/vpe</code>): "Virtual Presence Engine" modificado, Modo-8 (3D estilo <em>Comanche</em>).</li>
+  <li><strong>Red</strong> (<code>src/netlib</code>): rutinas IPX.</li>
+  <li><strong>Herramientas</strong> (<code>tools/</code>): <code>bin2h</code>, <code>testdll</code>, <code>unpak</code>, <code>wld</code> (<code>wld2zon</code>/<code>wlddbg</code>).</li>
+</ul>
+<p>→ Detalle completo (estructuras de datos, opcodes, riesgos, símbolos concretos): <a href="docs/architecture/03-componentes-principales.md">03</a>.</p>
+
+<hr>
+
+<h2>4. Build system</h2>
+<p>Sin CMake/autotools: todo es <strong>OpenWatcom <code>wmake</code></strong> (OW 1.9 obligatorio, incompatible con OW2), con targets DOS16/DOS32/host. La macro <code>SESSION</code> (<code>-DDEBUG</code>) determina la variante: <code>session.div</code>/<code>.386</code> (debug, extensor <code>dos4g</code>, con depurador <code>d.cpp</code>) vs <code>div32run.ins</code>/<code>.386</code> (release, empaquetado con <code>pmwlite</code> sobre el extensor <code>pmodew</code>).</p>
+<div class="finding">Los <code>c.lnk</code>/<code>cdbg.lnk</code> de la raíz son <strong>legado muerto</strong> (ningún makefile activo los invoca; el linking real está embebido inline en cada makefile). <code>pmwlite</code> se compila como herramienta de host y se usa como paso post-enlace (<code>pmwlite -C4 -S&lt;pmodew.exe&gt; &lt;exe&gt;</code>) para bindear/comprimir <code>DIV32RUN.DLL</code>/<code>.ins</code> e <code>install.ovl</code> — pero <strong>no</strong> se usa para <code>D.EXE</code>/<code>D.386</code> (que usan <code>wstub.exe</code>). Hay tres módulos huérfanos del árbol activo de build: <code>tools/wld</code>, <code>src/install2</code> y <code>src/div_stub</code> (este último deshabilitado a propósito).</div>
+<p>→ Detalle (toolchain, árbol completo de submakefiles, variables, CI, Vagrant, gotchas): <a href="docs/architecture/04-build-system.md">04</a>.</p>
+
+<hr>
+
+<h2>5. Dependencias de terceros (<code>3rdparty/</code>)</h2>
+<table>
+  <tr><th>Librería</th><th>Uso</th><th>Integración real</th></tr>
+  <tr><td><strong>JUDAS</strong></td><td>Sonido (mixing, Sound Blaster, timers)</td><td>API <code>judas_*</code> en minúscula, usada en <code>divsound.cpp</code>, <code>divpcm.cpp</code>, <code>divbrow.cpp</code>, <code>divtimer.cpp</code> (IDE y runtime)</td></tr>
+  <tr><td><strong>SuperVGA Kit (SciTech)</strong></td><td>Acceso a modos VESA/SVGA</td><td>Genera <code>svga.lib</code> <strong>y</strong> un <code>pmode.lib</code> interno del propio SVGA Kit — <strong>distinto</strong> de PMODE/W (<code>pmwlite/</code>), aunque ambos coexisten enlazados en los mismos binarios</td></tr>
+  <tr><td><strong>libjpeg (IJG)</strong></td><td>Imágenes JPEG (v9c)</td><td>Único punto de integración: <code>src/div/divforma.cpp</code> (solo IDE)</td></tr>
+  <tr><td><strong>zlib</strong> (1.2.11)</td><td>Compresión</td><td>API simple <code>compress()</code>/<code>uncompress()</code> en <code>divc.cpp</code>, <code>divfrm.cpp</code>, <code>div32run/f.cpp</code> (opcodes de PAK) y ambos instaladores</td></tr>
+  <tr><td><strong>TopFLC</strong></td><td>Playback FLI/FLC</td><td>Único punto de integración: <code>src/div32run/divfli.cpp</code> (solo runtime). Licencia propia no-GPL (uso comercial requiere contactar al autor)</td></tr>
+  <tr><td><strong>PMODE/W</strong> (1.34)</td><td>Extensor DOS 32-bit</td><td>Se recompila como herramienta de host y bindea binarios release vía <code>pmwlite</code>, ver §4</td></tr>
+</table>
+<p>→ Detalle (versiones exactas, símbolos, tabla librería→consumidor, pendientes no verificados): <a href="docs/architecture/05-dependencias-terceros.md">05</a>.</p>
+
+<hr>
+
+<h2>6. Formatos de archivo propietarios (<code>formats/</code>)</h2>
+<p>Documentados como esquemas <strong>Kaitai Struct (<code>.ksy</code>)</strong>: <code>a3d</code>, <code>fnt</code>, <code>fpg</code>, <code>game_exe</code>, <code>ifs</code>, <code>install</code>/<code>install_pak</code>, <code>map</code>, <code>o3d</code>, <code>pak</code>, <code>pal</code>, <code>wld</code>.</p>
+<div class="finding">
+<strong>WLD es dos formatos en uno</strong> — una capa de edición completa y, a partir de <code>offset_vpe+12</code>, un bloque runtime independiente con su propia mini-cabecera, confirmado línea a línea contra <code>src/vpe/load.cpp</code>.<br><br>
+<strong>PAK nunca lo lee el juego compilado</strong>: el instalador lo descomprime a ficheros sueltos en disco; el runtime solo lee ficheros individuales.<br><br>
+<strong><code>install_pak</code></strong> es un <code>pak</code> partido en volúmenes de disco, señalizado por un byte de "volumen no final" en la cabecera de cada <code>.001/.002/...</code>.<br><br>
+<strong><code>game_exe</code></strong> confirmado con precisión de bytes contra <code>src/div32run/i.cpp</code> (<code>fseek(f,602,...)</code>, cabecera de 10 enteros, payload zlib).
+</div>
+<p>→ Detalle (estructura binaria de cada formato, referencias cruzadas al código): <a href="docs/architecture/06-formatos-archivo.md">06</a>.</p>
+
+<hr>
+
+<h2>7. Modelo de ejecución (pipeline DIV)</h2>
+<pre><code>Programa .PRG  →  compila (divc.cpp, lexer dirigido por system\ltlex.def)  →  bytecode + cabecera de 10 enteros
+      →  se concatena al stub de 602 bytes (embebido, ver §3)  →  EXE autónomo
+      →  al ejecutarse invoca DIV32RUN pasándose a sí mismo  →  VM (mem[] unificado, switch de kernel.cpp)
+      →  funciones runtime resueltas como DLL vía el mismo loader PE casero (pe_load.c) que las DLLs de usuario</code></pre>
+<p>El modelo de proceso del lenguaje DIV es un bloque fijo dentro de <code>mem[]</code> (<code>_Status/_Father/_Son/.../_Frame</code>), con un scheduler round-robin por prioridad en <code>exec_process()</code>; <code>FRAME</code>/<code>FRAME(n)</code> del lenguaje son literalmente los opcodes <code>lfrm</code>/<code>lfrf</code>.</p>
+<div class="finding">Dato no obvio confirmado en el makefile real: el "stub de 602 bytes" (<code>div_stub.h</code>) es un binario ya compilado embebido como array de bytes, y el código fuente que debería generarlo (<code>src/div32run/wstub/wstub.c</code>) está reducido en el repo a un <code>main(void){}</code> vacío — discrepancia real, documentada como tal (no inventada).</div>
+<p>→ Detalle (compilador, formato de bytecode, arranque, VM, procesos, SESSION=1 vs 0): <a href="docs/architecture/07-modelo-ejecucion.md">07</a>.</p>
+
+<hr>
+
+<h2>8. Aspectos técnicos relevantes / desafíos de portabilidad</h2>
+<ol>
+  <li><strong>Compilación</strong>: OpenWatcom 1.9 con triple target (16-bit DOS, 32-bit DOS, host); no compila con OW2 tal cual.</li>
+  <li><strong>16/32 bits mezclado vía DPMI</strong>: el stub de arranque (<code>src/div_stub/asm/exec.asm</code>) detecta CPU con el truco clásico de flags y lanza <code>DIV32RUN.DLL</code> (32-bit, cargado por PMODE/W) vía <code>INT 21h AH=4Bh</code>. Ejemplo concreto de callback DPMI real-mode en <code>src/vpe/hard.cpp</code> (<code>int386Extend</code>, <code>INT 31h AX=0x300</code>) para simular <code>INT 7Ah</code> (IPX real-mode) desde modo protegido.</li>
+  <li><strong>Assembler x86</strong> (WASM/TASM): <code>a.asm</code>, <code>timer.asm</code>, <code>vesa.asm</code>, <code>t.asm</code>, <code>draw_*.asm</code>.</li>
+  <li><strong>Dependencias DOS hardcodeadas</strong>: VGA/SVGA vía VESA/BIOS, DAC, Sound Blaster bare-metal (DMA por puertos), IPX, ratón por driver, PIC.</li>
+  <li><strong>Loader PE propio</strong> (<code>pe_load.c</code>): parsea cabeceras/secciones/relocations a mano pero no procesa importaciones PE (ver §3).</li>
+  <li><strong>Aislabilidad de la VM respecto a la I/O</strong> (relevante para un port moderno): confirmado solo parcialmente. <code>s.cpp</code> e <code>i.cpp</code> están razonablemente aislados de hardware/DOS; <code>v.cpp</code> escribe directamente a registros CRTC/Sequencer de VGA (es la propia capa de hardware); <code>f.cpp</code> mezcla ~31 llamadas a hardware/DOS entre las funciones nativas del lenguaje, sin frontera de módulo limpia.</li>
+</ol>
+<p>→ Detalle (evidencia de código, TODOs/FIXMEs reales encontrados, implicaciones para un port moderno): <a href="docs/architecture/08-aspectos-tecnicos.md">08</a>.</p>
+
+<hr>
+
+<h2>9. Estado del árbol</h2>
+<p>Fotografía puntual — revalidar siempre con <code>git status</code>/<code>git branch -a</code> antes de confiar en ella. A la fecha de esta revisión (2026-09-17): rama <code>master</code>, <span class="label-ok"><strong>árbol de trabajo limpio</strong></span> (una revisión anterior de este documento registraba 6 archivos modificados sin commitear en <code>src/vpe/*.inc</code>; ya no están presentes). OpenWatcom <span class="label-warn"><strong>sigue sin estar instalado</strong></span> en este equipo (<code>WATCOM</code> no definido, <code>wmake</code>/<code>wcc386</code> fuera del <code>PATH</code>) — es el primer paso para poder compilar. Las libs de terceros ya están precompiladas (386/586), así que no hace falta TASM para un build normal.</p>
+<p>→ Detalle y comandos de revalidación: <a href="docs/architecture/09-estado-arbol.md">09</a>.</p>
+
+<hr>
+
+<h2>10. Hoja de ruta</h2>
+<ol>
+  <li>Instalar OpenWatcom 1.9 (DOS16 + DOS32 + host) y verificar <code>wmake</code> en el PATH (o usar el <code>Vagrantfile</code> del repo).</li>
+  <li>Probar <code>wmake tools</code> antes del build completo; luego <code>wmake</code> completo, documentando errores propios de OW1.9 sobre Windows moderno.</li>
+  <li>Ejecutar <code>wmake test_dll</code> y, con DOSBox instalado, los tests del intérprete.</li>
+  <li>Decidir objetivo: compilar y correr bajo DOSBox-X (alineado con el milestone 2.01), o evaluar un port moderno sustituyendo la capa de bajo nivel — viable en principio porque la VM es parcialmente separable de la I/O (ver §8), aunque <code>f.cpp</code>/<code>v.cpp</code> no tienen una frontera limpia hoy.</li>
+</ol>
+<p>→ Detalle y roadmap declarado del proyecto (milestones 2.01/2.02): <a href="docs/architecture/10-hoja-de-ruta.md">10</a>.</p>
+
+<div class="footer">
+  DIV Games Studio 2 — <a href="https://github.com/vii1/DIV">github.com/vii1/DIV</a> — Licencia GPL v3
+</div>
+
+</body>
+</html>

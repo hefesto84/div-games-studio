@@ -1,0 +1,68 @@
+# binarios generados
+*.obj
+*.exe
+*.lib
+*.386
+*.586
+*.ovl
+*.dll
+
+# ficheros intermedios de Watcom
+*.err
+*.mk1
+*.tgt
+/3rdparty/**/*.map
+/pmwlite/**/*.map
+*.lst
+*.pch
+*.sym
+
+# copias de seguridad
+*.bak
+*.bac
+
+# logs de Vagrant
+/*.log
+
+# ficheros temporales de programas externos
+/3rdparty/scitech/doc/*/*.[Gg][Ii][Dd]
+
+# carpetas
+/bin
+/_trash
+/_basura
+/build.*
+/build/
+/.vscode
+/.vagrant
+
+# artefactos de CMake
+CMakeUserPresets.json
+
+# salidas de depuración y bytecode de prueba generados por
+# port/div/core/build_test_prg.py (ver docs/architecture/12-port-progreso.md
+# checkpoint 8) -- regenerables, no se commitean
+run_*.txt
+*.div32
+# artefactos del compilador divc_port (system\EXEC.EXE ya cubierto por *.exe)
+system/exec.*
+system/EXEC.INS
+
+# artefactos de ejecucion del IDE portado (div_ide_port): al salir reescribe
+# la configuracion con el layout de MSVC (3560 bytes frente a los 2052 del
+# SETUP.BIN original de Watcom) y guarda el estado del escritorio.
+# Ver docs/architecture/13-handoff.md §2.1
+system/session.dtf
+system/SESSION.DTF
+
+
+# los exe de PMODEW sí los queremos
+!/pmwlite/*.[Ee][Xx][Ee]
+
+# las librerías 3rd party también, para no tener que recompilarlas ya que
+# algunas requieren TASM
+!/3rdparty/lib/**/*.[Ll][Ii][Bb]
+
+# incluimos DOS4GW con la instalación
+!/system/dos4gw.exe
+prehistorik2/tools/__pycache__/

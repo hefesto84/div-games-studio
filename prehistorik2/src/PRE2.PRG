@@ -1,0 +1,25 @@
+PROGRAM PRE2;
+
+GLOBAL
+    fpg;
+
+BEGIN
+    SET_MODE(M320x200);
+    fpg = LOAD_FPG("PRE2SPR.FPG");
+    CLEAR_SCREEN();
+
+    SHOW_SPRITE(60, 80, 1);
+    SHOW_SPRITE(150, 80, 100);
+    SHOW_SPRITE(240, 80, 250);
+
+    REPEAT
+        FRAME;
+    UNTIL (KEY(_esc))
+END
+
+PROCESS SHOW_SPRITE(X, Y, GRAPH);
+BEGIN
+    REPEAT
+        FRAME;
+    UNTIL (KEY(_esc))
+END

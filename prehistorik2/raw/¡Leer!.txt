@@ -1,0 +1,202 @@
+*******************************************************
+* Este juego fue bajado de "La Cueva de los Clásicos" *
+*******************************************************
+Abandonware, programas, roms, soluciones, trucos y más!
+
+Direcciones en la web:
+http://www.cuevadeclasicos.com.ar
+http://www.cuevadeclasicos.cjb.net
+
+E-Mail:
+webmaster@cuevadeclasicos.com.ar
+lukas@cuevadeclasicos.com.ar
+
+***********************************************************************
+
+
+SOLUCION DE PROBLEMAS DE JUEGOS
+===============================
+Estos juegos son bastante viejos asi que puede ser que causen problemas
+con máquinas relativamente nuevas. La mayoría de los problemas se
+resuelven ejecutandolos bajo MS-DOS asi que aca doy un par de tips para
+que puedas jugarlos sin inconvenientes.
+
+CREACION DE DISCO DE ARRANQUE:
+Todos o casi todos los sistemas operativos tienen una opcion para crear
+discos de arranque. La idea es que te crees un disco con tu sistema
+operativo y luego reinicies la PC con el diskete insertado. La máquina
+comenzará a leer el disco cuando termine de cargarlo, aparecerá el
+prompt (a:\>). Buscá la carpeta del juego (donde lo descomprimiste) y 
+escribí Play.bat. Si no funciona el sonido, las teclas, la musica o lo
+que sea, puede que tengas que configurar el juego desde el Setup. Al
+reiniciar la PC desde DOS se la hará funcionar libre de memoria por lo
+que los juegos generalmente funcionan con música y todos los chiches.
+
+PROBLEMAS DE MEMORIA:
+La solución a este problema depende del sistema operativo que uses:
+A) MS-DOS: 
+- Ejecuta MEMMAKER o instala KEMM.
+- Para juegos que carguen con un extensor de memoria (modo protegido)
+  como el DOS4GW.EXE, PMODEW.EXE, etc. probá a cargar tu PC con un 
+  arranque limpio (con la configuracion minima del CONFIG.SYS y el
+  AUTOEXEC.BAT). En mi PC esto se hace pulsando F5 al arrancar, pero en
+  tu ordenador puede ser otra tecla de funcion o incluso una tecla que
+  no sea de funcion como el MAYS IZQUIERDO.
+- Si no sabes/consigues averiguar la tecla para arrancar omitiendo los
+  archivos de sistema haz un disco de arranque.
+a) Si el disquette no esta formateado o no te importa perder sus
+   datos escribe: FORMAT A: /S
+   Añade el modificador /Q para hacer un formato rapido si el
+   disquette ya esta formateado.
+b) Si no quieres perder los datos que tuvieras en el disquette pon:
+   SYS A:
+
+B) WIN98: 
+- Probá arrancar el sistema en MODO MS-DOS desde el menu Inicio.
+- Si no funciona entonces desde Win98 andá al directorio donde tengas
+  instalado el Windows (/WINDOWS normalmente) y clickeá en la opcion
+  mostrar archivos. Busca dos accesos directos a MS-DOS llamados 
+  "MS-DOS para juegos" y "MS-DOS para juegos con XMS y EMS". Usalos
+  y tendras algo mas de 620 Kb de memoria convencional, a ver que tal.
+  Tené en cuenta que el raton y otros drivers no te funcionaran, carga
+  el MOUSE.COM despues de arrancar con uno de estos accesos directos.
+  Si no sabes si tenés el MOUSE.COM escribe desde tu directorio raiz:
+  DIR MOUSE.COM /s
+  Si no aparece es que no lo tenés. Entrá a mi web y buscalo en la
+  sección de "Programas" que seguramente te lo vas a poder bajar sin
+  problemas.
+
+C) WIN95: 
+- En Win95 no estan los accesos directos de Win98, tendremos que
+  crearlos nosotros.
+- Haz clicqu con el boton derecho del raton en tu escritorio y
+  selecciona la opcion NUEVO/ACCESO DIRECTO.
+- En la linea de comandos que te pide escribe la ubicacion del
+  COMMAND.COM. Normalmente C:/WINDOWS/COMMAND.COM o C:/COMMAND.COM
+- Pon un nombre como "MODO MSDOS PARA JUEGOS" y pulsa Intro o sobre
+  finalizar. Ya tenemos el acceso directo en nuestro escritorio, ahora
+  hay que configurarlo.
+- Pulsa con el boton derecho del raton sobre el acceso directo y
+  selecciona PROPIEDADES.
+- Selecciona la ficha PROGRAMA y pulsa en el boton AVANZADO.
+- Activa el boton que pone MODO MS-DOS.
+- Selecciona el boton que pone ESPECIFICAR NUEVA CONFIGURACION DE MS-DOS.
+- En el cuadro del CONFIG.SYS debes hacer que ponga lo siguiente:
+      DOS=HIGH,UMB
+      DEVICE=C:\WINDOWS\HIMEM.SYS
+      DEVICE=C:\WINDOWS\EMM386.EXE NOEMS
+- Si tu disco duro esta comprimido con DriveSpace añade ademas la
+  siguiente linea al cuadro del CONFIG.SYS, si no lo tienes comprimido
+  no la pongas: DEVICEHIGH=C:\WINDOWS\COMMAND\DRVSPACE.SYS /MOVE
+- En el cuadro del AUTOEXEC.BAT pon lo siguiente:
+      SET PROMPT=Modo MS-DOS $p$g
+      SET winbootdir=C:\WINDOWS
+      SET PATH=C:\WINDOWS;C:\WINDOWS\COMMAND
+      CLS
+      ECHO ******************************************************
+      ECHO **     Modo MSDOS para Windows 95                   **
+      ECHO **     Soporte para Memeoria XMS                    **
+      ECHO **                                                  **
+      ECHO **     Escribe EXIT para volver a Win98             **
+      ECHO ******************************************************      
+- Hay programas que requieren ademas una chapuza que Lotus, Intel
+  y Microsoft bautizaron en su dia como memoria expandida (EMS). De ahi
+  lo de LIM-EMS. Vamos a crear entonces otro acceso directo como el
+  anterior pero con soporte de EMS. Debes hacer TODO igual que con el
+  acceso anterior pero en la carpeta donde tengas que editar el
+  AUTOEXEC.BAT sustituye la linea que dice:
+  DEVICE=C:\WINDOWS\EMM386.EXE NOEMS
+  por esta otra: 
+  DEVICE=C:\WINDOWS\EMM386.EXE X RAM
+  Pero donde dice X pon la cantidad de memoria expandida que necesita tu
+  programa. Como casi seguro que tienes mas de 16 megas (Si tuvieras 8
+  no usarias Win95, y con 4 mucho menos) en tu equipo deja X=4096 que te
+  funcionara todo, aunque yo no recuerdo haber visto un juego que
+  requiera mas de 1Mb de EMS, pero bueno. Pues pon esta linea:
+  DEVICE=C:\WINDOWS\EMM386.EXE 4096 RAM
+- Ah, y en el momento de seleccionar un nombre para el acceso directo
+  pon algo como "MODO MS-DOS PARA JUEGOS CON XMS Y EMS".
+
+
+UTILIZACION DEL MO'SLOW:
+Al correr este programa la velocidad de nuestra maquina pasa a ser mucho 
+menor a la velocidad normal. Esto nos puede servir debido a que hay 
+juegos que funcionan demasiado rápido y es necesario alentizar nuestra
+PC temporalmente para poder jugarlos correctamente. La velocidad normal
+de nuestra PC vuelve a ser la misma cuando se sale del juego.
+A continuación estan las instrucciones de como utilizarlo:
+Primero debes copiar el archivo MoSlow.com al directorio donde se 
+encuentra instalado el juego que deseas correr. Tomemos de ejemplo que
+se quiere utilizar el juego simcity.exe. Para ello debes seguir estos 
+pasos:
+Para correr un juego a la velocidad de una IBM PC/XT, debes escribir 
+lo siguiente desde MS-DOS: moslow simcity.exe
+Para correr un juego al 8% de la velocidad normal, debes escribir:
+moslow /8 simcity.exe
+Para mas información, consultar el manual original del programa.
+(MoSlow.doc)
+
+=======================================================================
+
+  Normas y Disclaimer
+  ===================
+
+* El acceso a "La Cueva de los Clásicos" (a partir de ahora llamdo "el
+  sitio") es privado y de acceso restringido y por ello se encuentra
+  bajo los derechos y la protección que a estos lugares las leyes de
+  nuestro país, el Ordenamiento Jurídico Internacional y el el Internet
+  Privacy Act dispensan, no pudiéndose entender que aceptamos la libre
+  entrada. 
+
+* Los contenidos de "el sitio" se encuentran alojados en un servidor
+  fuera de Argentina.
+
+* Todo el material almacenado en "el sitio" ha sido exclusivamente
+  descargado de Internet de sitios públicos , por lo tanto este
+  material es considerado de libre distribución a menos que se indique
+  lo contrario en el material descargado. En ningún artículo legal se
+  menciona la prohibición de material libre por lo que esta página no
+  infringe en ningún caso la ley.
+
+* Dicho material es sólo y exclusivamente para su exhibición, no
+  pudiendo así ser distribuido. Este material solo es proporcionado
+  como copias de seguridad del software original y no podrá ser
+  descargado en caso de no poseer el original. La ley permite tener una
+  copia de seguridad del software original para uso personal.
+
+* En ningún caso "el sitio" apoya la piratería, es más, la rechaza
+  frontalmente. 
+
+* Ni el webmaster de "el sitio", ni sus colaboradores se hacen
+  responsables del mal uso que pueda darsele al material aquí expuesto.
+  La incorrecta utilización de él queda pura y exclusivamente en manos
+  del visitante.
+
+* "El sitio" no se responsabiliza del contenido de las web afiliadas,
+   ni de los links que se expongan.
+
+* El Webmaster se reserva el derecho de vetar la entrada a cualquier
+  sujeto a "el sitio" y a su vez se reserva el derecho de prohibir el
+  uso de cualquier programa y/o información, en concordancia con los
+  derechos de autor otorgados por el artículo 14 LPI.
+
+* En caso de poseer el copyright de uno de los archivos/programas aquí
+  expuestos y no queriendo que ellos sean exhibidos, contactarse con el
+  Webmaster para su inmediata remoción.
+
+* Está ESTRICTAMENTE PROHIBIDO hacer algún link a los archivos .ZIP y
+  .EXE contenidos en "el sitio" para que otros sitios hagan usufructo
+  de ellos.
+
+* La entrada a "el sitio" y la utilización de este software denominado
+  "abandonware" implica la aceptación total de las normas y nunca de
+  manera parcial. Si no aceptas alguno de los puntos debes borrar
+  inmediatamente cualquier información que te hayas descargado de
+  "el sitio".
+
+**********************************************************************
+* Webmaster: LuKas                                                   *
+* La Cueva de los Clásicos. http://www.cuevadeclasicos.com.ar        *
+* La Furia de Dragon Ball. http://www.lafuriadedragonball.com.ar     *
+* © Copyright. Todos los derechos reservados.                        *
+**********************************************************************

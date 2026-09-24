@@ -1,0 +1,30 @@
+language: minimal
+dist: focal
+jobs:
+  include:
+    - os: windows
+      env:
+        WATCOM: $HOME/watcom
+        PATH: $WATCOM/binnt:$WATCOM/binw:$PATH
+        INCLUDE: $WATCOM/h
+        EDPATH: $WATCOM/eddat
+        WIPFC: $WATCOM/wipfc
+        LIB: $WATCOM/lib286:$WATCOM/lib286/dos:$WATCOM/lib386:$WATCOM/lib386/dos
+    - os: linux
+      env:
+        WATCOM: $HOME/watcom
+        PATH: $WATCOM/binl:$WATCOM/binw:$PATH
+        INCLUDE: $WATCOM/h
+        EDPATH: $WATCOM/eddat
+        WIPFC: $WATCOM/wipfc
+        LIB: $WATCOM/lib286:$WATCOM/lib286/dos:$WATCOM/lib386:$WATCOM/lib386/dos
+
+before_install:
+  - source .travis/install_watcom.sh
+script:
+  - wmake
+  - wmake tools
+  - wmake test_dll
+cache:
+  directories:
+    - ~/watcom
