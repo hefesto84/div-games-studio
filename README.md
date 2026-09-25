@@ -6,15 +6,17 @@ Repositorio original: https://github.com/DIVGAMES/DIV-Games-Studio
 
 [¿Qué es esto?](#qué-es-esto)  
 [¿Qué es DIV Games Studio?](#qué-es-div-games-studio)  
+[El port nativo a Windows 11 (raylib)](#el-port-nativo-a-windows-11-raylib)  
 [Cómo compilar DIV](#cómo-compilar-div)  
 [Problemas conocidos](#problemas-conocidos)  
 [Descripción de archivos y carpetas](#descripción-de-archivos-y-carpetas)  
 
 ## ¿Qué es esto?
 Este proyecto pretende retomar el desarrollo de DIV Games Studio 2.0, tomando como punto de partida la versión comercial original para MS-DOS, y de paso también reordenar, limpiar, comentar y [documentar](https://github.com/vii1/DIV/wiki) el código para que todo el mundo pueda estudiarlo y aprender cómo funciona DIV por dentro.
-Basado en [Raylib](https://github.com/raysan5/raylib)
 
-DIV 2 funciona correctamente en el emulador [DOSBox](https://www.dosbox.com/)/[DOSBox-X](https://dosbox-x.com/) y probablemente aún mejor en una máquina DOS real siempre que tenga al menos un procesador 486 (recomendado Pentium), 16 MB de RAM, ratón y tarjeta gráfica SVGA. Este proyecto se centra en MS-DOS y posiblemente otros sistemas retro como [AMIGA](https://es.wikipedia.org/wiki/Commodore_Amiga). Si quieres DIV2 portado a plataformas modernas, te recomiendamos [la versión de MikeDX](https://github.com/DIVGAMES/DIV-Games-Studio), que no sólo funciona nativamente en Windows/Mac/Linux sino que te permite compilar tus juegos para consolas, móviles e incluso HTML5.
+Además de restaurar y documentar el DIV 2 original de MS-DOS, este repositorio incluye un **port nativo a Windows 11** construido sobre [raylib](https://www.raylib.com/), que permite ejecutar tanto el runtime como el propio IDE sin DOSBox ni hardware de la época. Ver la sección [El port nativo a Windows 11 (raylib)](#el-port-nativo-a-windows-11-raylib) más abajo.
+
+DIV 2 (la versión original de MS-DOS) funciona correctamente en el emulador [DOSBox](https://www.dosbox.com/)/[DOSBox-X](https://dosbox-x.com/) y probablemente aún mejor en una máquina DOS real siempre que tenga al menos un procesador 486 (recomendado Pentium), 16 MB de RAM, ratón y tarjeta gráfica SVGA. Si buscas otras alternativas de DIV2 portado a plataformas modernas, también existe [la versión de MikeDX](https://github.com/DIVGAMES/DIV-Games-Studio), que usa SDL en vez de raylib y permite además compilar tus juegos para consolas, móviles e incluso HTML5.
 
 ### Hoja de ruta
 * [Versión 2.01](https://github.com/vii1/DIV/milestone/1): El primer objetivo es conseguir reproducir lo más fielmente posible el DIV 2 en su versión 2.01 tal como salió a la venta en 1999.
@@ -32,7 +34,44 @@ En 2015, MikeDX, antiguo miembro de FastTrak, anunció que había retomado el c�
 
 [Saber más (Wikipedia)](https://es.wikipedia.org/wiki/DIV_Games_Studio)
 
-## Cómo compilar DIV
+## El port nativo a Windows 11 (raylib)
+
+Este repositorio incluye, además de la restauración del DIV 2 original de MS-DOS, un **port nativo a Windows 11** que sustituye toda la capa de vídeo, audio, input y temporizado (originalmente hardware de PC vía BIOS/VGA/Sound Blaster/PIT/DPMI) por [raylib](https://www.raylib.com/). Se eligió raylib frente a alternativas como SDL2 por su API más directa, un build más simple con MSVC, soporte nativo de cosas como `SetSoundPitch()`, y su licencia zlib (compatible con la GPLv3 de este proyecto). El razonamiento completo de esa decisión está documentado en [`docs/architecture/11-port-windows11-mikedx.md`](docs/architecture/11-port-windows11-mikedx.md).
+
+El port cubre tanto el runtime (`DIV32RUN`, el intérprete de bytecode) como el compilador del lenguaje DIV y el propio **IDE** (editor de código, editores de recursos, depurador...), todo corriendo de forma nativa, sin DOSBox. El estado detallado y actualizado del port se documenta en [`docs/architecture/13-handoff.md`](docs/architecture/13-handoff.md) y lo pendiente en [`docs/architecture/16-port-plan-pendiente.md`](docs/architecture/16-port-plan-pendiente.md).
+
+### Descargar un build ya compilado
+Cada push a este repositorio dispara un [workflow de GitHub Actions](.github/workflows/build-windows.yml) que compila el port y publica un `.zip` listo para usar en la release [`latest`](https://github.com/vii1/DIV/releases/tag/latest). Descárgalo, descomprímelo, y ejecuta:
+* `div_ide_port.exe` — el IDE (editor + compilador + depurador).
+* `div32run_port.exe` — el runtime, para ejecutar un `.prg`/`.exe` de DIV ya compilado.
+* `divc_port.exe` — el compilador del lenguaje DIV en línea de comandos.
+
+### Compilar el port desde el código fuente
+
+#### Requisitos previos
+* **Windows** (el port usa MSVC; no se ha probado con MinGW).
+* [Visual Studio 2022 Build Tools](https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2022) (o Visual Studio 2022 completo) con el workload de **desarrollo de escritorio en C++**.
+* [CMake](https://cmake.org/download/) 3.16 o superior.
+* Una distribución precompilada de **raylib 5.0 para MSVC**: descarga `raylib-5.0_win64_msvc16.zip` (o `win32_msvc16` para 32 bits) desde las [releases de raylib](https://github.com/raysan5/raylib/releases/tag/5.0) y descomprímela en cualquier ruta.
+
+#### Compilación
+* Clona el repositorio con `git clone https://github.com/vii1/DIV.git`
+* Configura el proyecto con CMake indicando dónde descomprimiste raylib:
+  ```
+  cmake -B build . -DRAYLIB_PATH="<ruta-a-raylib-5.0_win64_msvc16>"
+  ```
+* Compila los tres ejecutables del port (runtime, compilador e IDE):
+  ```
+  cmake --build build --target div32run_port divc_port div_ide_port --config Release
+  ```
+* Copia junto a los `.exe` generados en `build/Release` las carpetas `system`, `help` y `resource` de la raíz del repositorio (son los recursos que usa el IDE).
+* Ejecuta `div_ide_port.exe` para abrir el IDE, o `div32run_port.exe <programa>` para lanzar un juego ya compilado.
+
+El workflow de CI ([`.github/workflows/build-windows.yml`](.github/workflows/build-windows.yml)) reproduce exactamente estos mismos pasos de forma desatendida en cada push, y es la referencia más fiable si algo de lo anterior queda desactualizado.
+
+## Cómo compilar DIV (versión original MS-DOS)
+
+Esta sección describe cómo compilar el **DIV 2 original para MS-DOS**, con el toolchain clásico de Watcom. Si lo que buscas es ejecutar DIV en Windows moderno, probablemente te interese el [port nativo a Windows 11 con raylib](#el-port-nativo-a-windows-11-raylib) descrito arriba.
 
 **Nota**: Alternativamente al proceso explicado a continuación, puedes [compilar DIV usando Vagrant](https://github.com/vii1/DIV/wiki/Compilar-con-Vagrant).
 
