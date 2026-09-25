@@ -12,6 +12,7 @@ Repositorio original: https://github.com/DIVGAMES/DIV-Games-Studio
 
 ## ¿Qué es esto?
 Este proyecto pretende retomar el desarrollo de DIV Games Studio 2.0, tomando como punto de partida la versión comercial original para MS-DOS, y de paso también reordenar, limpiar, comentar y [documentar](https://github.com/vii1/DIV/wiki) el código para que todo el mundo pueda estudiarlo y aprender cómo funciona DIV por dentro.
+Basado en [Raylib](https://github.com/raysan5/raylib)
 
 DIV 2 funciona correctamente en el emulador [DOSBox](https://www.dosbox.com/)/[DOSBox-X](https://dosbox-x.com/) y probablemente aún mejor en una máquina DOS real siempre que tenga al menos un procesador 486 (recomendado Pentium), 16 MB de RAM, ratón y tarjeta gráfica SVGA. Este proyecto se centra en MS-DOS y posiblemente otros sistemas retro como [AMIGA](https://es.wikipedia.org/wiki/Commodore_Amiga). Si quieres DIV2 portado a plataformas modernas, te recomiendamos [la versión de MikeDX](https://github.com/DIVGAMES/DIV-Games-Studio), que no sólo funciona nativamente en Windows/Mac/Linux sino que te permite compilar tus juegos para consolas, móviles e incluso HTML5.
 
